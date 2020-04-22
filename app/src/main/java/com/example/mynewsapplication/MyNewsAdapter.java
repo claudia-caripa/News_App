@@ -44,7 +44,7 @@ public class MyNewsAdapter extends ArrayAdapter<MyNews> {
         // Check if there is an existing list item view (called convertView) that we can reuse,
         // otherwise, if convertView is null, then inflate a new list item layout.
         View listItemView = convertView;
-        if (listItemView == null) {
+        if (convertView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.list_item, parent, false);
         }
@@ -59,6 +59,18 @@ public class MyNewsAdapter extends ArrayAdapter<MyNews> {
         // Find the TextView with view ID newsTitle
         TextView webTitleView = (TextView) listItemView.findViewById(R.id.newsTitle);
         webTitleView.setText(currentNews.getNewsTitle());
+
+        /**
+         * OJO
+          */
+        TextView authorNameView = (TextView) listItemView.findViewById(R.id.authorInformation);
+        if (currentNews.getAuthorName() != null){
+            authorNameView.setText(currentNews.getAuthorName());
+            authorNameView.setVisibility(View.VISIBLE);
+        } else {
+            authorNameView.setVisibility(View.GONE);
+        }
+
 
         // Create a new Date object from the publication date of the news
         //Date dateObject= new Date(currentNews.getPublicationDate());

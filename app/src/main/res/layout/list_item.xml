@@ -33,6 +33,15 @@
             android:textStyle="bold"
             tools:text="Long placeholder for the title of the news that should wrap to more than 5 lines of text" />
 
+        <TextView
+            android:id="@+id/authorInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            tools:text="Claudia Sanchez" />
+
 
     </LinearLayout>
 

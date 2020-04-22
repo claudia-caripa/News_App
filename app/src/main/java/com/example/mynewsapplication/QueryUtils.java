@@ -158,10 +158,6 @@ public final class QueryUtils {
                 // Get a single news at position i
                 JSONObject currentNews = newsArray.getJSONObject(i);
 
-                // For a given news, extract the JSONObject associated with the
-                // key called "properties"
-                //JSONObject properties = currentNews.getJSONObject("properties");
-
                 // Extract the value for the key called "sectionName"
                 String sectionName = currentNews.getString("sectionName");
 
@@ -174,8 +170,24 @@ public final class QueryUtils {
                 // Extract the value for the key called "webUrl"
                 String webUrl = currentNews.getString("webUrl");
 
+                /**
+                 * OJO
+                 */
+
+                JSONArray tagsArray = currentNews.getJSONArray("tags");
+                String authorName = null;
+                for (int j = 0; j < tagsArray.length(); j++){
+                    JSONObject currentTag = tagsArray.getJSONObject(j);
+                    String type = currentTag.getString("type");
+                    if (!type.equals("contributor")) {
+                        continue;
+                    }
+                    authorName = currentTag.getString("webTitle");
+                    break;
+                }
+
                 //Create a new MyNews object
-                MyNews myNews1 = new MyNews(sectionName, webTitle, webPublicationDate, webUrl);
+                MyNews myNews1 = new MyNews(sectionName, webTitle, webPublicationDate, webUrl, authorName);
 
                 //Add the new MyNews object to the list of news
                 myNews.add(myNews1);

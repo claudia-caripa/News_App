@@ -6,16 +6,18 @@ public class MyNews {
     private String mNewsTitle;
     private String mPublicationDate;
     private String mUrl;
+    private String mAuthorName;
 
     /**
      * Constructs a new MyNews object
      */
 
-    public MyNews (String sectionName, String newsTitle, String publicationDate, String url){
+    public MyNews(String sectionName, String newsTitle, String publicationDate, String url, String authorName){
         mSectionName = sectionName;
         mNewsTitle = newsTitle;
         mPublicationDate = publicationDate;
         mUrl = url;
+        mAuthorName = authorName;
     }
 
     /**
@@ -48,6 +50,15 @@ public class MyNews {
      */
     public String getUrl(){
         return mUrl;
+    }
+
+
+    /**
+     * Returns author information
+     *
+     */
+    public String getAuthorName(){
+        return mAuthorName;
     }
 
 }

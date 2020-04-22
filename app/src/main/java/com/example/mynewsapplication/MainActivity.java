@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     public static final String LOG_TAG = MainActivity.class.getName();
 
     /** URL for news data from theguardian dataset */
-    //private static final String REQUEST_URL = "https://content.guardianapis.com/search?order-by=newest&page=10&q=science&api-key=test";
     private static final String REQUEST_URL = "https://content.guardianapis.com/search";
 
     /**
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Entering OnCreate");
         setContentView(R.layout.activity_main);
 
         // Find a reference to the {@link ListView} in the layout
@@ -73,7 +71,10 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
 
-                startActivity(websiteIntent);
+                if (websiteIntent.resolveActivity(getPackageManager()) != null){
+
+                    startActivity(websiteIntent);
+                }
             }
         });
 
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         Uri baseUri = Uri.parse(REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         uriBuilder.appendQueryParameter("order-by", orderBy);
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
         uriBuilder.appendQueryParameter("page", "10");
         uriBuilder.appendQueryParameter("q", requestContent);
         uriBuilder.appendQueryParameter("api-key", "test");
@@ -126,22 +128,18 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-
         // Set empty state text to display "No news found."
         mEmptyStateTextView.setText(R.string.no_news_found);
 
-        //System.out.println("Enter onLoadFinished");
         mAdapter.clear();
 
         if(myNews != null && !myNews.isEmpty()){
-            //System.out.println("Enter onLoadFinished with length: " + myNews.size());
             mAdapter.addAll(myNews);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<MyNews>> loader) {
-        //System.out.println("Enter onLoadReset");
         mAdapter.clear();
     }
 
